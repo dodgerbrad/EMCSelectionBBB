@@ -1,5 +1,5 @@
 // --- CONFIGURATION & GLOBALS ---
-const depURL = "";
+const depURL = "https://script.google.com/macros/s/AKfycbwFfM-b-W2Z1obFlxTbxOtfzvdek8XnReWyE3S3nfWNOp_46glHLM0ODZ5hQxYFQc0nqw/exec";
 const STORAGE_KEY = "ncaaDraftProgress_2026_global";
 const get = id => document.getElementById(id);
 let bettors = [];
