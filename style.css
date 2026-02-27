@@ -1,1 +1,321 @@
+/* --- 1. Global Variables & Color Scheme (NCAA Theme) --- */
+:root {
+    --ncaa-primary: #003366;   /* Classic Navy */
+    --ncaa-accent: #C8102E;    /* Classic Red */
+    --background: #f4f6f8;     /* Softer Light Gray */
+    --card-bg: #ffffff;        /* Crisp White */
+    --text: #2d3436;           /* Professional Charcoal */
+    --success: #e1f5fe;        /* Soft Blue Success */
+    --picked-red: #fff5f5;     /* Very subtle red tint */
+  }
+  
+  /* --- 2. Body and Base Typography --- */
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--background);
+    color: var(--text);
+    padding: 20px;
+    margin: 0;
+    overflow-y: scroll; /* Ensure the body is the main scrolling container */
+    min-height: 100vh;
+  }
+  
+  h1 {
+    font-family: 'Georgia', serif;
+    color: var(--ncaa-primary);
+    font-size: 1.5rem;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    
+    border-bottom: 3px solid var(--ncaa-accent);
+    padding-bottom: 10px;
+    
+    /* FIXES FOR CENTERING */
+    display: block;           /* Change from inline-block to block */
+    margin: 0 auto 20px;      /* Centers block element and adds bottom spacing */
+    width: 100%;
+    max-width: 800px;
+  }
+  
+  h2, h3 {
+    color: var(--ncaa-primary);
+  }
+  
+  .content-wrapper {
+    max-width: 1000px;
+    width: 100%;
+    margin: 0 auto; /* Centers the wrapper */
+    padding: 0 20px;
+  }
+  
+  /* --- 3. Card Styling & Layout --- */
+  #setup-controls, #draft-controls {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 51, 102, 0.08);
+    margin: 0 auto 2rem;
+    width: 90%;
+    max-width: 1000px;
+    border-top: 5px solid var(--ncaa-accent);
+    box-sizing: border-box;
+    position: static; /* Ensure parent container isn't sticky itself */
+  }
+  
+  /* --- 4. Sticky Header for Current Picks --- */
+  #global-pick-area {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--background); 
+    padding: 10px;
+    border-bottom: 2px solid var(--ncaa-primary);
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    display: flex; 
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap; 
+  }
+  
+  /* --- 5. Inputs & Buttons --- */
+  label {
+    display: block;
+    font-weight: bold;
+    margin-top: 15px;
+    color: var(--text);
+  }
+  
+  input, select {
+    width: 100%;
+    padding: 12px;
+    margin: 5px 0 15px;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 1rem;
+    border: 2px solid var(--ncaa-primary);
+    background-color: white; /* Ensure background is white */
+  }
+  
+  button {
+    background-color: var(--ncaa-primary);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 10px;
+    width: auto;
+    margin-right: 5px;
+  }
+  
+  button:hover:not(:disabled) {
+    opacity: 0.9;
+  }
+  
+  button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+  
+  button:active {
+    transform: translateY(2px);
+    box-shadow: inset 0 3px 5px rgba(0,0,0,0.2);
+  }
+  
+  #undo-button { 
+    background-color: #dc3545; 
+    margin-left: 30px;
+  }
+  #finish-button { background-color: #28a745; }
+  
+  
+  /* --- 6. Table Styling --- */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--background);
+    margin-top: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    font-size: 0.9rem;
+  }
+  
+  thead {
+    background-color: var(--ncaa-accent);
+    color: white;
+  }
+  
+  thead th {
+      position: sticky;
+      top: 95px; /* Sits below the main global pick area */
+      background-color: var(--ncaa-primary);
+      z-index: 90;
+  }
+  
+  th, td {
+    padding: 8px 12px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+  }
+  
+  tbody tr:nth-child(even) {
+    background-color: var(--card-bg);
+  }
+  
+  tbody tr {
+    transition: background-color 0.3s;
+    /* Ensure smooth scrolling stops above sticky headers */
+    scroll-margin-top: 100px; 
+  }
+  
+  tbody tr.picked-row {
+    background-color: var(--picked-red) !important;
+    color: #a0a0a0;
+    text-decoration: line-through;
+  }
+  
+  
+  /* --- 7. Status Displays & Animations --- */
+  #current-bettor-display {
+    color: var(--ncaa-accent);
+    font-size: 1.2rem;
+    font-weight: bold;
+    display: inline;
+    margin-bottom: 0;
+    margin-right: 10px;
+  }
+  
+  #last-pick-display {
+    padding: 10px;
+    border-radius: 6px;
+    background-color: var(--success);
+    border-left: 5px solid var(--ncaa-primary);
+    color: var(--ncaa-primary);
+    font-weight: 500;
+    min-height: 20px;
+    opacity: 0;
+    margin-top: 10px;
+    flex-basis: 100%; /* Takes full width below other controls */
+  }
+  
+  .animate-flash {
+    animation: flash-update 0.8s ease-out;
+    opacity: 1 !important;
+  }
+  
+  @keyframes flash-update {
+    0% { 
+        background-color: #fff3cd;
+        transform: scale(1.01);
+        opacity: 1;
+    }
+    100% { 
+        background-color: var(--success); 
+        transform: scale(1);
+        opacity: 1;
+    }
+  }
+  
+  /* --- 8. Media Queries (Responsiveness) --- */
+  
+  /* Desktop Specific Adjustments (min-width: 768px) */
+  @media screen and (min-width: 768px) {
+    #team-selector,#team-filter {
+        width: 400px;
+        margin: 0 15px;
+        flex-grow: 1;
+        font-size: 1.1rem;
+        padding: 12px;
+    }
+  
+    #global-pick-area button {
+        padding: 12px 30px;
+        font-size: 1rem;
+    }
+  
+    #global-pick-area p {
+        white-space: nowrap; 
+        margin: 0;
+    }
+  }
+  
+  /* Mobile Specific Adjustments (max-width: 767px) */
+  @media screen and (max-width: 767px) {
+    body {
+        padding: 10px;
+    }
+  
+    h1 {
+        font-size: 1.8rem;
+        letter-spacing: 1px;
+    }
+  
+    button {
+        width: 100%; /* Stack buttons vertically on mobile */
+        margin: 8px 0;
+        padding: 15px;
+        font-size: 1.1rem;
+    }
+  
+    #undo-button {
+        margin-left: 0;
+    }
+  
+    #draft-controls {
+        overflow-x: auto; /* Allow horizontal scroll if table is too wide */
+        padding: 1rem;
+    }
+  
+    #global-pick-area {
+        top: -1px;
+        padding: 15px;
+    }
+  
+    thead th {
+        top: 130px; /* Offset to sit below your sticky pick area on mobile */
+    }
+    
+    #global-pick-area p, #global-pick-area label, #global-pick-area select {
+        flex-basis: 100%; /* Stack controls vertically on mobile */
+    }
+  }
+  
+  /* Touch Device Optimization (Active states vs hover) */
+  @media (hover: none) {
+    button:active {
+        background-color: var(--ncaa-accent);
+        transform: scale(0.98);
+    }
+  }
 
+  #loader-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.loader {
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid #3498db; /* Your draft theme color */
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
