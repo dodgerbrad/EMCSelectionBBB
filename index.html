@@ -1,1 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <!-- Essential for mobile responsiveness -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>2026 NCAA Bracket Draft</title>
+
+    <!-- iOS App Capability -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Madness Draft">
+    <link rel="manifest" href="manifest.json">
+
+    <!-- High-quality iPhone icon (180x180 PNG) -->
+    <link rel="apple-touch-icon" href="Madness-touch.png">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="Madness.png">
+</head>
+
+
+<body>
+    <div id="loader-overlay" style="display: none;">
+        <div class="loader"></div>
+        <p>Fetching Player Data...</p>
+    </div>
+    <div class="content-wrapper"> <!-- ADDED WRAPPER -->
+        <h1>EMC Girls BB 2026</h1>
+
+        <!-- Setup Controls (Visible First) -->
+        <div id="setup-controls">
+            <h2>All Conf Selection Setup</h2>
+            <label for="masterName">Enter Coach Name:</label>
+            <input type="text" id="masterName" placeholder="Your Name">
+            <label for="bettorNamesInput">Enter Your School:</label>
+            <input type="text" id="bettorNamesInput">
+            <label for="numRows">You will need to select the top 16 players in order:</label>
+            <input type="number" id="numRows" value="16" min="1" disabled>
+            <button onclick="initializeDraftOrder()">Start Selecting</button>
+        </div>
+
+        <!-- Draft Controls (Hidden until ready) -->
+        <div id="draft-controls" style="display: none;">
+            <h2>EMC Selection Form</h2>
+
+            <!-- GLOBAL PICKING CONTROLS -->
+            <div id="global-pick-area">
+                <p>Current Picker: <strong id="current-bettor-display"></strong> (Pick <strong
+                        id="current-pick-number-display"></strong> of <strong id="total-picks-display"></strong>)</p>
+                
+                        <!-- NEW: Team Filter -->
+                <label for="team-filter">Filter by Team:</label>
+                <select id="team-filter" onchange="filterPlayersByTeam()">
+                    <option value="">-- All Teams --</option>
+                </select>
+
+                <label for="team-selector">Select Player:</label>
+                <!-- We will populate this single select dropdown -->
+                <select id="team-selector" style="padding: 10px; font-size: 16px; min-width: 200px;"></select>
+
+                <button onclick="recordCurrentPickGlobal()">Submit Pick</button>
+
+                <div id="last-pick-display" style="margin-top: 10px; color: gray;"></div>
+            </div>
+
+
+
+            <!-- The main drafting table where picks are recorded -->
+            <table id="dynamicTable">
+                <thead>
+                    <tr>
+                        <th>Pick No.</th>
+                        <th>School Selecting</th>
+                        <th>Player Selected</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- JS inserts all pick rows here -->
+                </tbody>
+            </table>
+
+            <!-- Action Buttons for Undo/Finish -->
+            <!-- Action Buttons for Undo/Finish -->
+            <div style="margin-top: 20px;">
+                <!-- ADD THIS LINE BELOW -->
+
+
+                <button id="finish-button" onclick="sendAllPicksToGoogle()" style="display: none;">Submit Selections</button>
+                <button onclick="finishAndClearDraft()">Clear Everything</button>
+                <button id="undo-button" onclick="undoLastPick()" disabled>Undo Last Pick</button>
+            </div>
+
+        </div>
+    </div> <!-- CLOSED WRAPPER -->
+
+    <input type="hidden" id="hiddenMaster">
+    <input type="hidden" id="hiddenGamblers">
+    <div id="statusMessage" style="display: none;"></div>
+
+    <!-- Link your JS file -->
+    <script src="script.js"></script>
+</body>
+
+</html>
